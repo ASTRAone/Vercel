@@ -1,26 +1,24 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from "react";
 
-import { useStyles } from './hooks/useStyles';
+import { useStyles } from "./hooks/useStyles";
 
-import { Footer } from './components/Footer';
-import { FormAdd } from './components/FormAdd';
-import { TaskList } from './components/TaskList';
-import { AppContext } from './context/appContext';
-import styles from './styles.module.scss';
-import { TFilters, TTodo } from './types';
+import { Footer } from "./components/Footer";
+import { FormAdd } from "./components/FormAdd";
+import { TaskList } from "./components/TaskList";
+import { AppContext } from "./context/appContext";
+import styles from "./styles.module.scss";
+import { TFilters, TTodo } from "./types";
 
 const App: FC = () => {
   const cx = useStyles(styles);
-  const [todos] = useState<TTodo[]>(
-    JSON.parse(localStorage.getItem('todos') || '[]')
+  const [todos, setTodos] = useState<TTodo[]>(
+    JSON.parse(localStorage.getItem("todos") || "[]")
   );
 
-  const [filteredTodos, setFilteredTodos] = useState<TTodo[]>(todos);
-
-  const [typeFilter, setTypeFilter] = useState<TFilters>('all');
+  const [typeFilter, setTypeFilter] = useState<TFilters>("all");
 
   useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos));
+    localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
   const addedTodo = (title: string) => {
@@ -30,12 +28,12 @@ const App: FC = () => {
       completed: false,
     };
 
-    setFilteredTodos((prev) => [newTodo, ...prev]);
+    setTodos((prev) => [newTodo, ...prev]);
   };
 
   const deleteTodo = (id: string) => {
     const newTodos = todos.filter((item) => item.id !== id);
-    setFilteredTodos(newTodos);
+    setTodos(newTodos);
   };
 
   const editTodo = (id: string, title: string) => {
@@ -46,7 +44,7 @@ const App: FC = () => {
       return item;
     });
 
-    setFilteredTodos(updateTodos);
+    setTodos(updateTodos);
   };
 
   const onToggleCompleteTodo = (id: string) => {
@@ -57,19 +55,19 @@ const App: FC = () => {
       return item;
     });
 
-    setFilteredTodos(updateTodos);
+    setTodos(updateTodos);
   };
 
   const clearTodoActive = () => {
     const newTodos = todos.filter((item) => !item.completed);
-    setFilteredTodos(newTodos);
+    setTodos(newTodos);
   };
 
   const onChangeFilterTodos = (filterType: TFilters) => {
     setTypeFilter(filterType);
   };
 
-  const activeTodos = filteredTodos.filter((item) => !item.completed).length;
+  const activeTodos = todos.filter((item) => !item.completed).length;
 
   return (
     <AppContext.Provider
@@ -80,11 +78,12 @@ const App: FC = () => {
         onToggleCompleteTodo,
         onChangeFilterTodos,
         setTypeFilter,
-      }}>
-      <div className={cx('container')}>
-        <div className={cx('content')}>
+      }}
+    >
+      <div className={cx("container")}>
+        <div className={cx("content")}>
           <FormAdd addedTodo={addedTodo} />
-          <TaskList todos={filteredTodos} typeFilter={typeFilter} />
+          <TaskList todos={todos} />
           <Footer activeTodos={activeTodos} clearTodoActive={clearTodoActive} />
         </div>
       </div>

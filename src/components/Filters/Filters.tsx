@@ -1,12 +1,12 @@
-import { FC, use } from 'react';
+import { FC, use } from "react";
 
-import { Button } from '@mui/material';
+import { Button } from "@mui/material";
 
-import { FILTERS } from '../../constants';
-import { AppContext } from '../../context/appContext';
-import { useStyles } from '../../hooks/useStyles';
-import { TFilters } from '../../types';
-import styles from './styles.module.scss';
+import { FILTERS } from "../../constants";
+import { AppContext } from "../../context/appContext";
+import { useStyles } from "../../hooks/useStyles";
+import { TFilters } from "../../types";
+import styles from "./styles.module.scss";
 
 export const Filters: FC = () => {
   const cx = useStyles(styles);
@@ -14,22 +14,23 @@ export const Filters: FC = () => {
 
   const onChangeFilter = (type: TFilters) => {
     return () => {
-      setTypeFilter(type);
+      setTypeFilter?.(type);
     };
   };
 
   return (
-    <div className={cx('container')}>
+    <div className={cx("container")}>
       {FILTERS.map((item) => {
         const type = item.label.toLowerCase() as TFilters;
 
         return (
           <Button
             key={item.id}
-            className={cx('btn')}
-            variant={typeFilter === type ? 'outlined' : 'contained'}
+            className={cx("btn")}
+            variant={typeFilter === type ? "outlined" : "contained"}
             color="inherit"
-            onClick={onChangeFilter(type)}>
+            onClick={onChangeFilter(type)}
+          >
             {item.label}
           </Button>
         );

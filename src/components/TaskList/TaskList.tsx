@@ -1,20 +1,22 @@
-import React, { useMemo, useState } from 'react';
+import React, { use, useMemo, useState } from "react";
 
-import { usePopupControls } from '../../hooks/usePopupControls';
-import { useStyles } from '../../hooks/useStyles';
-import { TFilters, TTodo } from '../../types';
-import { ListTasksItem } from './ListTasksItem';
-import { ModalEdit } from './ModalEdit';
-import styles from './styles.module.scss';
+import { usePopupControls } from "../../hooks/usePopupControls";
+import { useStyles } from "../../hooks/useStyles";
+import { TTodo } from "../../types";
+import { ListTasksItem } from "./ListTasksItem";
+import { ModalEdit } from "./ModalEdit";
+import styles from "./styles.module.scss";
+import { AppContext } from "../../context/appContext";
 
 type Props = {
   todos: TTodo[];
-  typeFilter: TFilters;
 };
 
-export const TaskList: React.FC<Props> = ({ todos, typeFilter }) => {
+export const TaskList: React.FC<Props> = ({ todos }) => {
   const cx = useStyles(styles);
   const { isOpened, openPopup, closePopup } = usePopupControls();
+  const { typeFilter } = use(AppContext);
+
   const [todo, setTodo] = useState<TTodo>();
 
   const openModalEdit = (item: TTodo) => {
@@ -25,11 +27,11 @@ export const TaskList: React.FC<Props> = ({ todos, typeFilter }) => {
   };
 
   const filteredTodos = useMemo(() => {
-    if (typeFilter === 'active') {
+    if (typeFilter === "active") {
       return todos.filter((item) => !item.completed);
     }
 
-    if (typeFilter === 'completed') {
+    if (typeFilter === "completed") {
       return todos.filter((item) => item.completed);
     }
 
@@ -38,7 +40,7 @@ export const TaskList: React.FC<Props> = ({ todos, typeFilter }) => {
 
   return (
     <>
-      <div className={cx('container')}>
+      <div className={cx("container")}>
         {todos.length > 0
           ? filteredTodos.map((item, index) => {
               const isFirst = index === 0;

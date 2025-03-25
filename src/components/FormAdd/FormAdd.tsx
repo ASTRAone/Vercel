@@ -4,12 +4,12 @@ import {
   FC,
   InputHTMLAttributes,
   useState,
-} from 'react';
+} from "react";
 
-import { Input } from '@mui/material';
+import { Input } from "@mui/material";
 
-import { useStyles } from '../../hooks/useStyles';
-import styles from './styles.module.scss';
+import { useStyles } from "../../hooks/useStyles";
+import styles from "./styles.module.scss";
 
 type Props = {
   addedTodo: (title: string) => void;
@@ -17,7 +17,7 @@ type Props = {
 
 export const FormAdd: FC<Props> = ({ addedTodo }) => {
   const cx = useStyles(styles);
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -30,18 +30,17 @@ export const FormAdd: FC<Props> = ({ addedTodo }) => {
       HTMLInputElement
     >
   ) => {
-    if (value.trim() && e.key === 'Enter') {
+    if (value.trim() && e.key === "Enter") {
       addedTodo(value);
-      setValue('');
+      setValue("");
     }
   };
 
   return (
-    <div className={cx('container')}>
-      <div className={cx('iconContainer')}></div>
+    <div className={cx("container")}>
       <Input
         type="text"
-        className={cx('input')}
+        className={cx("input")}
         placeholder="What needs to be done?"
         value={value}
         onChange={onChange}

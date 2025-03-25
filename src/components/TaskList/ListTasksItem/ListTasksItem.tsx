@@ -1,16 +1,16 @@
-import { FC, use } from 'react';
+import { FC, use } from "react";
 
 import {
   CheckCircle,
   DeleteForever,
   Edit,
   PanoramaFishEyeOutlined,
-} from '@mui/icons-material';
+} from "@mui/icons-material";
 
-import { AppContext } from '../../../context/appContext';
-import { useStyles } from '../../../hooks/useStyles';
-import { TTodo } from '../../../types';
-import styles from './styles.module.scss';
+import { AppContext } from "../../../context/appContext";
+import { useStyles } from "../../../hooks/useStyles";
+import { TTodo } from "../../../types";
+import styles from "./styles.module.scss";
 
 type Props = TTodo & {
   onEdit: () => void;
@@ -29,20 +29,23 @@ export const ListTasksItem: FC<Props> = ({
   const { deleteTodo, onToggleCompleteTodo } = use(AppContext);
 
   return (
-    <li className={cx('container', { isFirst })}>
-      <div className={cx('content')}>
-        <div onClick={() => onToggleCompleteTodo(id)}>
+    <li className={cx("container", { isFirst })}>
+      <div className={cx("content")}>
+        <div onClick={() => onToggleCompleteTodo?.(id)}>
           {completed ? (
-            <CheckCircle className={cx('icon', { completed })} />
+            <CheckCircle className={cx("icon", { completed })} />
           ) : (
-            <PanoramaFishEyeOutlined className={cx('icon')} />
+            <PanoramaFishEyeOutlined className={cx("icon")} />
           )}
         </div>
-        <p className={cx('text', { completed })}>{title}</p>
+        <p className={cx("text", { completed })}>{title}</p>
       </div>
-      <div>
-        <Edit onClick={onEdit} className={cx('icon')} />
-        <DeleteForever onClick={() => deleteTodo(id)} className={cx('icon')} />
+      <div className={cx("controls")}>
+        <Edit onClick={onEdit} className={cx("icon")} />
+        <DeleteForever
+          onClick={() => deleteTodo?.(id)}
+          className={cx("icon")}
+        />
       </div>
     </li>
   );
