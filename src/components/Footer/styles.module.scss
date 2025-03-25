@@ -1,0 +1,17 @@
+.container {
+    padding: 10px;
+    background-color: white;
+    border-top: 1px solid #ebebeb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+    & .btn {
+      color: #6c6868;
+      text-transform: capitalize;
+    }
+
+    & .active {
+        color: #6c6868;
+    }
+}

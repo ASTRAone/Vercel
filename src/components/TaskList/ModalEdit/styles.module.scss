@@ -1,0 +1,31 @@
+.container {
+    position: absolute;
+    background-color: white;
+    height: 300px;
+    min-width: 400px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+    padding: 40px 10px 10px 10px;
+    outline: none;
+  
+    & .icon {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      cursor: pointer;
+    }
+
+    & .content {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        justify-content: center;
+        height: 100%;
+
+        & .title {
+            text-align: center;
+        }
+    }
+  }
